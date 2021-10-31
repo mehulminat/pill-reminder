@@ -31,7 +31,7 @@ class Welcome extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     buttonChild: FittedBox(
                       child: Text(
-                        "Get started now",
+                        "on boarding complete",
                         style: Theme.of(context)
                             .textTheme
                             .headline3

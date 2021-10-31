@@ -1,15 +1,20 @@
+import 'dart:io';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:pill_reminder/screens/add_new_medicine/add_new_medicine.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../notifications/notifications.dart';
 import '../../database/repository.dart';
 import '../../models/pill.dart';
 import '../../screens/home/medicines_list.dart';
 import '../../screens/home/calendar.dart';
 import '../../models/calendar_day_model.dart';
+import '../onboarding/addinfo.dart';
+import 'package:pill_reminder/main.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -17,6 +22,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  File _image;
+  String _imagepath;
   //-------------------| Flutter notifications |-------------------
   final Notifications _notifications = Notifications();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -41,6 +48,7 @@ class _HomeState extends State<Home> {
     super.initState();
     initNotifies();
     setData();
+    LoadImage();
     _daysList = _days.getCurrentDays();
   }
 
@@ -169,16 +177,25 @@ class _HomeState extends State<Home> {
                               .headline1
                               .copyWith(color: Colors.black),
                         ),
-                        ShakeAnimatedWidget(
-                          enabled: true,
-                          duration: Duration(milliseconds: 2000),
-                          curve: Curves.linear,
-                          shakeAngle: Rotation.deg(z: 30),
-                          child: Icon(
-                            Icons.notifications_none,
-                            size: 42.0,
-                          ),
-                        )
+                        // ShakeAnimatedWidget(
+                        //   enabled: true,
+                        //   duration: Duration(milliseconds: 2000),
+                        //   curve: Curves.linear,
+                        //   shakeAngle: Rotation.deg(z: 30),
+                        //   child: Icon(
+                        //     Icons.notifications_none,
+                        //     size: 42.0,
+                        //   ),
+                        // )
+                        _imagepath != null
+                            ? CircleAvatar(
+                                backgroundImage: FileImage(File(_imagepath)),
+                                radius: 20.0,
+                              )
+                            : CircleAvatar(
+                                radius: 20.0,
+                                backgroundImage:
+                                    _image != null ? FileImage(_image) : null),
                       ],
                     ),
                   ),
@@ -238,5 +255,10 @@ class _HomeState extends State<Home> {
   }
 
   //===============================================================================
-
+  void LoadImage() async {
+    SharedPreferences saveImage = await SharedPreferences.getInstance();
+    setState(() {
+      _imagepath = saveImage.getString("imagepath");
+    });
+  }
 }
