@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pill_reminder/screens/home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
@@ -31,7 +32,7 @@ class _AddInfoState extends State<AddInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false, // fluter 1.x
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Center(
           child: Text(
@@ -44,9 +45,9 @@ class _AddInfoState extends State<AddInfo> {
         ),
       ),
       body: SingleChildScrollView(
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 32),
-          physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: 32),
+        physics: ClampingScrollPhysics(),
+        child: Column(
           children: [
             SizedBox(height: 10.0),
             Container(
@@ -93,51 +94,50 @@ class _AddInfoState extends State<AddInfo> {
               thickness: 2,
               height: 12,
             ),
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "Name:",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5
-                        .copyWith(color: Colors.black87),
-                    textAlign: TextAlign.center,
-                  ),
-                  TextField(
-                    controller: nameController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Name:",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(color: Colors.black87),
+                  textAlign: TextAlign.center,
+                ),
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    maxLines: 1,
                   ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Phone No:",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5
-                        .copyWith(color: Colors.black87),
-                    textAlign: TextAlign.center,
-                  ),
-                  TextField(
-                    controller: phoneController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                  maxLines: 1,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Phone No:",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(color: Colors.black87),
+                  textAlign: TextAlign.center,
+                ),
+                TextField(
+                  keyboardType: TextInputType.phone,
+                  controller: phoneController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    maxLines: 1,
                   ),
-                ],
-              ),
-            )
+                  maxLines: 1,
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -185,66 +185,6 @@ class _AddInfoState extends State<AddInfo> {
     );
   }
 
-/* 
-import 'dart:io';
-
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:user_profile_ii_example/model/user.dart';
-import 'package:user_profile_ii_example/utils/user_preferences.dart';
-import 'package:user_profile_ii_example/widget/appbar_widget.dart';
-import 'package:user_profile_ii_example/widget/button_widget.dart';
-import 'package:user_profile_ii_example/widget/profile_widget.dart';
-import 'package:user_profile_ii_example/widget/textfield_widget.dart';
-
-class EditProfilePage extends StatefulWidget {
-  @override
-  _EditProfilePageState createState() => _EditProfilePageState();
-}
-
-class _EditProfilePageState extends State<EditProfilePage> {
-  User user = UserPreferences.myUser;
-
-  @override
-  Widget build(BuildContext context) => ThemeSwitchingArea(
-        child: Builder(
-          builder: (context) => Scaffold(
-            appBar: buildAppBar(context),
-            body: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 32),
-              physics: BouncingScrollPhysics(),
-              children: [
-                ProfileWidget(
-                  imagePath: user.imagePath,
-                  isEdit: true,
-                  onClicked: () async {},
-                ),
-                const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Full Name',
-                  text: user.name,
-                  onChanged: (name) {},
-                ),
-                const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Email',
-                  text: user.email,
-                  onChanged: (email) {},
-                ),
-                const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'About',
-                  text: user.about,
-                  maxLines: 5,
-                  onChanged: (about) {},
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-} */
   void PickImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {

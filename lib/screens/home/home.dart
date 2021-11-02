@@ -15,6 +15,8 @@ import '../../screens/home/calendar.dart';
 import '../../models/calendar_day_model.dart';
 import '../onboarding/addinfo.dart';
 import 'package:pill_reminder/main.dart';
+import 'package:pill_reminder/screens/profile/profile.dart';
+import 'package:pill_reminder/screens/calendar/calendar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -82,7 +84,7 @@ class _HomeState extends State<Home> {
               .then((_) => setData());
         },
         tooltip: "Add Medicines",
-        child: Icon(Icons.ac_unit_outlined),
+        child: Icon(Icons.add_circle_sharp),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -103,12 +105,12 @@ class _HomeState extends State<Home> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (c, a1, a2) => AddNewMedicine(),
+                        pageBuilder: (c, a1, a2) => CalendarHome(),
                         // transitionDuration: Duration(milliseconds: 350),
                         transitionsBuilder:
                             (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(0.0, 1.0);
-                          const end = Offset.zero;
+                          const begin = Offset(-1.0, 0.0);
+                          const end = Offset(0.0, 0.0);
                           final tween = Tween(begin: begin, end: end);
                           final offsetAnimation = animation.drive(tween);
                           return SlideTransition(
@@ -132,11 +134,11 @@ class _HomeState extends State<Home> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (c, a1, a2) => AddNewMedicine(),
+                        pageBuilder: (c, a1, a2) => Profile(),
                         // transitionDuration: Duration(milliseconds: 350),
                         transitionsBuilder:
                             (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(0.0, 1.0);
+                          const begin = Offset(1.0, 0.0);
                           const end = Offset.zero;
                           final tween = Tween(begin: begin, end: end);
                           final offsetAnimation = animation.drive(tween);
@@ -179,27 +181,40 @@ class _HomeState extends State<Home> {
                               .headline1
                               .copyWith(color: Colors.black),
                         ),
-                        // ShakeAnimatedWidget(
-                        //   enabled: true,
-                        //   duration: Duration(milliseconds: 2000),
-                        //   curve: Curves.linear,
-                        //   shakeAngle: Rotation.deg(z: 30),
-                        //   child: Icon(
-                        //     Icons.notifications_none,
-                        //     size: 42.0,
-                        //   ),
-                        // )
-                        _imagepath != null
-                            ? CircleAvatar(
-                                backgroundImage: FileImage(File(_imagepath)),
-                                radius: 20.0,
-                              )
-                            : CircleAvatar(
-                                radius: 20.0,
-                                backgroundImage: _image != null
-                                    ? AssetImage(
-                                        'assets/onboard/emp_profile.png')
-                                    : null),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (c, a1, a2) => Profile(),
+                                transitionDuration: Duration(milliseconds: 350),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  const begin = Offset(1.0, 0.0);
+                                  const end = Offset.zero;
+                                  final tween = Tween(begin: begin, end: end);
+                                  final offsetAnimation =
+                                      animation.drive(tween);
+                                  return SlideTransition(
+                                    position: offsetAnimation,
+                                    child: child,
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: _imagepath != null
+                              ? CircleAvatar(
+                                  backgroundImage: FileImage(File(_imagepath)),
+                                  radius: 20.0,
+                                )
+                              : CircleAvatar(
+                                  radius: 20.0,
+                                  backgroundImage: _image != null
+                                      ? AssetImage(
+                                          'assets/onboard/emp_profile.png')
+                                      : null),
+                        ),
                       ],
                     ),
                   ),
