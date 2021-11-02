@@ -24,6 +24,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   File _image;
   String _imagepath;
+  String username;
   //-------------------| Flutter notifications |-------------------
   final Notifications _notifications = Notifications();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -49,6 +50,7 @@ class _HomeState extends State<Home> {
     initNotifies();
     setData();
     LoadImage();
+    LoadUserData();
     _daysList = _days.getCurrentDays();
   }
 
@@ -171,7 +173,7 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Journal",
+                          username != null ? username : 'Mehul',
                           style: Theme.of(context)
                               .textTheme
                               .headline1
@@ -194,8 +196,10 @@ class _HomeState extends State<Home> {
                               )
                             : CircleAvatar(
                                 radius: 20.0,
-                                backgroundImage:
-                                    _image != null ? FileImage(_image) : null),
+                                backgroundImage: _image != null
+                                    ? AssetImage(
+                                        'assets/onboard/emp_profile.png')
+                                    : null),
                       ],
                     ),
                   ),
@@ -259,6 +263,13 @@ class _HomeState extends State<Home> {
     SharedPreferences saveImage = await SharedPreferences.getInstance();
     setState(() {
       _imagepath = saveImage.getString("imagepath");
+    });
+  }
+
+  void LoadUserData() async {
+    SharedPreferences saveName = await SharedPreferences.getInstance();
+    setState(() {
+      username = saveName.getString("username");
     });
   }
 }
