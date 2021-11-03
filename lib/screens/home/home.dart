@@ -1,11 +1,8 @@
 import 'dart:io';
-
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:animated_widgets/animated_widgets.dart';
+import 'package:lottie/lottie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:pill_reminder/screens/add_new_medicine/add_new_medicine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../notifications/notifications.dart';
 import '../../database/repository.dart';
@@ -13,8 +10,6 @@ import '../../models/pill.dart';
 import '../../screens/home/medicines_list.dart';
 import '../../screens/home/calendar.dart';
 import '../../models/calendar_day_model.dart';
-import '../onboarding/addinfo.dart';
-import 'package:pill_reminder/main.dart';
 import 'package:pill_reminder/screens/profile/profile.dart';
 import 'package:pill_reminder/screens/calendar/calendar.dart';
 
@@ -186,7 +181,7 @@ class _HomeState extends State<Home> {
                               ),
                               Positioned(
                                 bottom: 0,
-                                left: 0,
+                                left: 3,
                                 child: Text(
                                   username != null ? username : 'Mehul',
                                   style: Theme.of(context)
@@ -247,16 +242,18 @@ class _HomeState extends State<Home> {
                 SizedBox(height: deviceHeight * 0.03),
                 dailyPills.isEmpty
                     ? SizedBox(
-                        width: double.infinity,
-                        height: 100,
-                        child: WavyAnimatedTextKit(
-                          textStyle: TextStyle(
-                              fontSize: 32.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                          text: ["Loading..."],
-                          isRepeatingAnimation: true,
-                          speed: Duration(milliseconds: 150),
+                        // width: deviceWidth,
+                        height: 400,
+                        child: OverflowBox(
+                          maxHeight: 700,
+                          maxWidth: 600,
+                          child: Lottie.asset(
+                            'assets/lottieanim/nodata_anim.json',
+                            repeat: true,
+                            reverse: true,
+                            alignment: Alignment.center,
+                            // width: 50.0,
+                          ),
                         ),
                       )
                     : MedicinesList(
