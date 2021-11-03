@@ -63,7 +63,9 @@ class _ProfileState extends State<Profile> {
                 height: 20.0,
               ),
               CircleAvatar(
-                backgroundImage: FileImage(File(_imagepath)),
+                backgroundImage: _imagepath != null
+                    ? FileImage(File(_imagepath))
+                    : AssetImage('assets/onboard/temp_profile.png'),
                 radius: 50.0,
               ),
               SizedBox(
@@ -80,7 +82,7 @@ class _ProfileState extends State<Profile> {
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0),
                 textAlign: TextAlign.left,
               ),
-              Text(this.name),
+              Text(this.name != null ? this.name : 'Reinstall'),
               Divider(
                 indent: 20,
                 thickness: 2,
@@ -92,7 +94,7 @@ class _ProfileState extends State<Profile> {
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0),
                 textAlign: TextAlign.left,
               ),
-              Text(this.phone),
+              Text(this.phone != null ? this.phone : 'Reinstall'),
             ],
           ),
         ),

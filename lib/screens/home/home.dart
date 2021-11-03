@@ -74,7 +74,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final double deviceHeight =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
-
+    final double deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBody: true,
       floatingActionButton: FloatingActionButton(
@@ -100,7 +100,7 @@ class _HomeState extends State<Home> {
                 IconButton(
                   padding: EdgeInsets.all(2.0),
                   onPressed: () {
-                    print("calneder");
+                    // print("calneder");
                     // (Navigator.of(context).pushNamed('calendar'));
                     Navigator.push(
                       context,
@@ -130,7 +130,7 @@ class _HomeState extends State<Home> {
                 IconButton(
                   padding: EdgeInsets.all(2.0),
                   onPressed: () {
-                    print("person");
+                    // print("person");
                     Navigator.push(
                       context,
                       PageRouteBuilder(
@@ -172,15 +172,33 @@ class _HomeState extends State<Home> {
                     alignment: Alignment.topCenter,
                     height: deviceHeight * 0.1,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          username != null ? username : 'Mehul',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1
-                              .copyWith(color: Colors.black),
+                        Container(
+                          height: deviceHeight * 0.1,
+                          width: deviceWidth * 0.7,
+                          child: Stack(
+                            children: [
+                              Text(
+                                "Hi,",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                child: Text(
+                                  username != null ? username : 'Mehul',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline4
+                                      .copyWith(color: Colors.black),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                        Spacer(),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
