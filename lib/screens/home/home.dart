@@ -11,7 +11,7 @@ import '../../screens/home/medicines_list.dart';
 import '../../screens/home/calendar.dart';
 import '../../models/calendar_day_model.dart';
 import 'package:pill_reminder/screens/profile/profile.dart';
-import 'package:pill_reminder/screens/calendar/calendar.dart';
+import 'package:pill_reminder/screens/calendar/calendarex.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -100,7 +100,7 @@ class _HomeState extends State<Home> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (c, a1, a2) => CalendarHome(),
+                        pageBuilder: (c, a1, a2) => CalendarEx(),
                         // transitionDuration: Duration(milliseconds: 350),
                         transitionsBuilder:
                             (context, animation, secondaryAnimation, child) {
@@ -181,7 +181,7 @@ class _HomeState extends State<Home> {
                               ),
                               Positioned(
                                 bottom: 0,
-                                left: 3,
+                                left: 1,
                                 child: Text(
                                   username != null ? username : 'Mehul',
                                   style: Theme.of(context)
