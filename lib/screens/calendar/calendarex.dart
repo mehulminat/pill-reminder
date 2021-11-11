@@ -1,4 +1,17 @@
+import 'dart:io';
+import 'package:lottie/lottie.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../notifications/notifications.dart';
+import '../../database/repository.dart';
+import '../../models/pill.dart';
+import '../../screens/home/medicines_list.dart';
+import '../../screens/home/calendar.dart';
+import '../../models/calendar_day_model.dart';
+import 'package:pill_reminder/screens/profile/profile.dart';
+import 'package:pill_reminder/screens/calendar/calendarex.dart';
 
 class CalendarEx extends StatefulWidget {
   @override
@@ -6,10 +19,71 @@ class CalendarEx extends StatefulWidget {
 }
 
 class _CalendarExState extends State<CalendarEx> {
+  final Notifications _notifications = Notifications();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  //===============================================================
+
+  //--------------------| List of Pills from database |----------------------
+  List<Pill> allListOfPills = List<Pill>();
+  final Repository _repository = Repository();
+  List<Pill> dailyPills = List<Pill>();
+  //=========================================================================
+
+  //-----------------| Calendar days |------------------
+  final CalendarDayModel _days = CalendarDayModel();
+  List<CalendarDayModel> _daysList;
+  //====================================================
+
+  //handle last choose day index in calendar
+  int _lastChooseDay = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    initNotifies();
+    setData();
+
+    _daysList = _days.getCurrentDays();
+  }
+
+  //init notifications
+  Future initNotifies() async => flutterLocalNotificationsPlugin =
+      await _notifications.initNotifies(context);
+
+  //--------------------GET ALL DATA FROM DATABASE---------------------
+  Future setData() async {
+    allListOfPills.clear();
+    (await _repository.getAllData("Pills")).forEach((pillMap) {
+      allListOfPills.add(Pill().pillMapToObject(pillMap));
+    });
+    chooseDay(_daysList[_lastChooseDay]);
+  }
+
+  void chooseDay(CalendarDayModel clickedDay) {
+    setState(() {
+      _lastChooseDay = _daysList.indexOf(clickedDay);
+      _daysList.forEach((day) => day.isChecked = false);
+      CalendarDayModel chooseDay = _daysList[_daysList.indexOf(clickedDay)];
+      chooseDay.isChecked = true;
+      dailyPills.clear();
+      allListOfPills.forEach((pill) {
+        DateTime pillDate =
+            DateTime.fromMicrosecondsSinceEpoch(pill.time * 1000);
+        if (chooseDay.dayNumber == pillDate.day &&
+            chooseDay.month == pillDate.month &&
+            chooseDay.year == pillDate.year) {
+          dailyPills.add(pill);
+        }
+      });
+      dailyPills.sort((pill1, pill2) => pill1.time.compareTo(pill2.time));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height - 60.0;
-
+    // final double deviceHeight =
+    // MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -47,23 +121,31 @@ class _CalendarExState extends State<CalendarEx> {
                 ],
               ),
               SizedBox(
-                height: 20.0,
+                height: deviceHeight * 0.01,
               ),
-              Text("Calendar Screen"),
-              SizedBox(
-                height: 20.0,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                child: Calendar(chooseDay, _daysList),
               ),
-              Divider(
-                indent: 20,
-                thickness: 2,
-                endIndent: 20,
-                color: Colors.black,
-              ),
-              Text(
-                "Calendar Info ",
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0),
-                textAlign: TextAlign.left,
-              ),
+              SizedBox(height: deviceHeight * 0.03),
+              dailyPills.isEmpty
+                  ? SizedBox(
+                      // width: deviceWidth,
+                      height: 400,
+                      child: OverflowBox(
+                        maxHeight: 700,
+                        maxWidth: 600,
+                        child: Lottie.asset(
+                          'assets/lottieanim/nodata_anim.json',
+                          repeat: true,
+                          reverse: true,
+                          alignment: Alignment.center,
+                          // width: 50.0,
+                        ),
+                      ),
+                    )
+                  : MedicinesList(
+                      dailyPills, setData, flutterLocalNotificationsPlugin)
             ],
           ),
         ),
