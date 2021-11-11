@@ -100,7 +100,7 @@ class _OnboardingState extends State<Onboarding> {
                 alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width,
                 child: Text(
-                  "Go To App",
+                  "Enter Information",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,

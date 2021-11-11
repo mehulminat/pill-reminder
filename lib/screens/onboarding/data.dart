@@ -50,9 +50,9 @@ List<SliderModel> getSlides() {
   sliderModel = new SliderModel();
   //3rd  screen
   sliderModel.setImgPath("assets/onboard/03onboard.png");
-  sliderModel.setTitle("Advance Notification");
+  sliderModel.setTitle("Get Notification's");
   sliderModel.setDescription(
-      "Option to send notification to guardian if you miss taking pill.");
+      "Get notified for every pill , that too with unique sound");
   slides.add(sliderModel);
 
   sliderModel = new SliderModel();

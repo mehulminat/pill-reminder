@@ -71,6 +71,7 @@ class _HomeState extends State<Home> {
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     final double deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       extendBody: true,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -171,7 +172,7 @@ class _HomeState extends State<Home> {
                       children: [
                         Container(
                           height: deviceHeight * 0.1,
-                          width: deviceWidth * 0.7,
+                          width: deviceWidth * 0.5,
                           child: Stack(
                             children: [
                               Text(
@@ -193,6 +194,14 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                         ),
+                        Spacer(),
+                        SizedBox(
+                            height: deviceHeight * 0.07,
+                            child: VerticalDivider(
+                              color: Colors.blue,
+                              thickness: 2,
+                            )),
+                        Text("Today"),
                         Spacer(),
                         GestureDetector(
                           onTap: () {
@@ -235,10 +244,10 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: deviceHeight * 0.01,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Calendar(chooseDay, _daysList),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 5.0),
+                //   child: Calendar(chooseDay, _daysList),
+                // ),
                 SizedBox(height: deviceHeight * 0.03),
                 dailyPills.isEmpty
                     ? SizedBox(

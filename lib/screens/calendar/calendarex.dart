@@ -1,17 +1,13 @@
-import 'dart:io';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../notifications/notifications.dart';
 import '../../database/repository.dart';
 import '../../models/pill.dart';
 import '../../screens/home/medicines_list.dart';
 import '../../screens/home/calendar.dart';
 import '../../models/calendar_day_model.dart';
-import 'package:pill_reminder/screens/profile/profile.dart';
-import 'package:pill_reminder/screens/calendar/calendarex.dart';
 
 class CalendarEx extends StatefulWidget {
   @override

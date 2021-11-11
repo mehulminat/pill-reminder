@@ -25,6 +25,7 @@ class MedicineApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+          backgroundColor: Colors.grey.shade100,
           fontFamily: "Popins",
           primaryColor: Colors.blue,
           textTheme: TextTheme(
