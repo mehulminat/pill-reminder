@@ -81,68 +81,70 @@ class _CalendarExState extends State<CalendarEx> {
     // final double deviceHeight =
     // MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(
-              left: 10.0, right: 10.0, top: 30.0, bottom: 30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: deviceHeight * 0.04,
-                    child: FittedBox(
-                      child: InkWell(
-                        child: Icon(Icons.arrow_back_ios_outlined),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(left: 15.0),
-                    height: deviceHeight * 0.05,
-                    child: FittedBox(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Calendar",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3
-                              .copyWith(color: Colors.black),
-                        )),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: deviceHeight * 0.01,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
-                child: Calendar(chooseDay, _daysList),
-              ),
-              SizedBox(height: deviceHeight * 0.03),
-              dailyPills.isEmpty
-                  ? SizedBox(
-                      // width: deviceWidth,
-                      height: 400,
-                      child: OverflowBox(
-                        maxHeight: 700,
-                        maxWidth: 600,
-                        child: Lottie.asset(
-                          'assets/lottieanim/nodata_anim.json',
-                          repeat: true,
-                          reverse: true,
-                          alignment: Alignment.center,
-                          // width: 50.0,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: 10.0, right: 10.0, top: 30.0, bottom: 30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: deviceHeight * 0.04,
+                      child: FittedBox(
+                        child: InkWell(
+                          child: Icon(Icons.arrow_back_ios_outlined),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
-                    )
-                  : MedicinesList(
-                      dailyPills, setData, flutterLocalNotificationsPlugin)
-            ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 15.0),
+                      height: deviceHeight * 0.05,
+                      child: FittedBox(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Calendar",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline3
+                                .copyWith(color: Colors.black),
+                          )),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: deviceHeight * 0.01,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Calendar(chooseDay, _daysList),
+                ),
+                SizedBox(height: deviceHeight * 0.03),
+                dailyPills.isEmpty
+                    ? SizedBox(
+                        // width: deviceWidth,
+                        height: 400,
+                        child: OverflowBox(
+                          maxHeight: 700,
+                          maxWidth: 600,
+                          child: Lottie.asset(
+                            'assets/lottieanim/nodata_anim.json',
+                            repeat: true,
+                            reverse: true,
+                            alignment: Alignment.center,
+                            // width: 50.0,
+                          ),
+                        ),
+                      )
+                    : MedicinesList(
+                        dailyPills, setData, flutterLocalNotificationsPlugin)
+              ],
+            ),
           ),
         ),
       ),

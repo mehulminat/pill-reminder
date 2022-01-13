@@ -42,9 +42,9 @@ List<SliderModel> getSlides() {
   sliderModel = new SliderModel();
   //2nd screen
   sliderModel.setImgPath("assets/onboard/02onboard.png");
-  sliderModel.setTitle("Healt Improvement");
+  sliderModel.setTitle("Health Improvement");
   sliderModel.setDescription(
-      "With regular talking pills you will recover soon and safe from side-effects from noting pills regularly.");
+      "With regular taking pills you will recover soon and safe from side-effects from not taking pills regularly.");
   slides.add(sliderModel);
 
   sliderModel = new SliderModel();
@@ -52,7 +52,7 @@ List<SliderModel> getSlides() {
   sliderModel.setImgPath("assets/onboard/03onboard.png");
   sliderModel.setTitle("Get Notification's");
   sliderModel.setDescription(
-      "Get notified for every pill , that too with unique sound");
+      "Get notified for every pill , that too with catchy sound");
   slides.add(sliderModel);
 
   sliderModel = new SliderModel();

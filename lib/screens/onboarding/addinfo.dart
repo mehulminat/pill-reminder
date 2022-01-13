@@ -31,7 +31,6 @@ class _AddInfoState extends State<AddInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false, // fluter 1.x
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Center(
