@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pill_reminder/screens/add_new_medicine/add_new_medicine.dart';
 import 'package:pill_reminder/screens/home/home.dart';
-import './screens/onboarding/welcome.dart';
+import 'package:pill_reminder/screens/onboarding/onboarding_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+int initScreen;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  initScreen = await preferences.getInt('initScreen');
+  await preferences.setInt('initScreen', 1);
   runApp(MedicineApp());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.black.withOpacity(0.05),
@@ -19,8 +25,9 @@ class MedicineApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+          backgroundColor: Colors.grey.shade100,
           fontFamily: "Popins",
-          primaryColor: Color.fromRGBO(7, 190, 200, 1),
+          primaryColor: Colors.blue,
           textTheme: TextTheme(
               headline1: ThemeData.light().textTheme.headline1.copyWith(
                     fontWeight: FontWeight.w700,
@@ -38,11 +45,12 @@ class MedicineApp extends StatelessWidget {
                     fontFamily: "Popins",
                   ))),
       routes: {
-        "/": (context) => Welcome(),
+        "/": (context) => Home(),
         "/home": (context) => Home(),
         "/add_new_medicine": (context) => AddNewMedicine(),
+        "onboard": (context) => Onboarding(),
       },
-      initialRoute: "/",
+      initialRoute: initScreen == 0 || initScreen == null ? 'onboard' : 'home',
     );
   }
 }

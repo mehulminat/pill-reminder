@@ -10,7 +10,7 @@ class CalendarDayModel {
   CalendarDayModel(
       {this.dayLetter, this.dayNumber, this.year, this.month, this.isChecked});
 
-  //----------------| get current 7 days |----------------------
+  // 7 din ka data
   List<CalendarDayModel> getCurrentDays() {
     final List<CalendarDayModel> daysList = List();
     DateTime currentTime = DateTime.now();
@@ -26,5 +26,4 @@ class CalendarDayModel {
     daysList[0].isChecked = true;
     return daysList;
   }
-  //============================================================
 }

@@ -67,34 +67,34 @@ class FormFields extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                width: 10,
-              ),
-              Flexible(
-                flex: 1,
-                child: Container(
-                  height: constrains.maxHeight * 0.22,
-                  child: DropdownButtonFormField(
-                    onTap: () => focus.unfocus(),
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 20.0),
-                        labelText: "Type",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide:
-                                BorderSide(width: 0.5, color: Colors.grey))),
-                    items: weightValues
-                        .map((weight) => DropdownMenuItem(
-                              child: Text(weight),
-                              value: weight,
-                            ))
-                        .toList(),
-                    onChanged: (value) => this.onPopUpMenuChanged(value),
-                    value: selectWeight,
-                  ),
-                ),
-              )
+              // SizedBox(
+              //   width: 10,
+              // ),
+              // Flexible(
+              //   flex: 1,
+              //   child: Container(
+              //     height: constrains.maxHeight * 0.22,
+              //     child: DropdownButtonFormField(
+              //       onTap: () => focus.unfocus(),
+              //       decoration: InputDecoration(
+              //           contentPadding: EdgeInsets.symmetric(
+              //               horizontal: 15.0, vertical: 20.0),
+              //           labelText: "Type",
+              //           border: OutlineInputBorder(
+              //               borderRadius: BorderRadius.circular(10.0),
+              //               borderSide:
+              //                   BorderSide(width: 0.5, color: Colors.grey))),
+              //       items: weightValues
+              //           .map((weight) => DropdownMenuItem(
+              //                 child: Text(weight),
+              //                 value: weight,
+              //               ))
+              //           .toList(),
+              //       onChanged: (value) => this.onPopUpMenuChanged(value),
+              //       value: selectWeight,
+              //     ),
+              //   ),
+              // )
             ],
           ),
           SizedBox(

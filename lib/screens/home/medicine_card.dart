@@ -18,9 +18,10 @@ class MedicineCard extends StatelessWidget {
     final bool isEnd = DateTime.now().millisecondsSinceEpoch > medicine.time;
 
     return Card(
-        elevation: 0.0,
+        elevation: 5.0,
         margin: EdgeInsets.symmetric(vertical: 7.0),
         color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: ListTile(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -74,7 +75,7 @@ class MedicineCard extends StatelessWidget {
             )));
   }
 
-  //--------------------------| SHOW THE DELETE DIALOG ON THE SCREEN |-----------------------
+  // dialog dekhane
 
   void _showDeleteDialog(
       BuildContext context, String medicineName, int medicineId, int notifyId) {
@@ -111,6 +112,4 @@ class MedicineCard extends StatelessWidget {
               ],
             ));
   }
-  //============================================================================================
-
 }

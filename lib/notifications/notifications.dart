@@ -67,7 +67,7 @@ class Notifications {
       context: _context,
       builder: (_) {
         return new AlertDialog(
-          title: Text("PayLoad"),
+          title: Text("Take Medicines"),
           content: Text("Payload : $payload"),
         );
       },

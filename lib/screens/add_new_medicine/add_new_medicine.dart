@@ -31,11 +31,11 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
 
   //list of medicines forms objects
   final List<MedicineType> medicineTypes = [
-    MedicineType("Syrup", Image.asset("assets/images/syrup.png"), true),
-    MedicineType("Pill", Image.asset("assets/images/pills.png"), false),
+    MedicineType("Pill", Image.asset("assets/images/pills.png"), true),
     MedicineType("Capsule", Image.asset("assets/images/capsule.png"), false),
     MedicineType("Cream", Image.asset("assets/images/cream.png"), false),
     MedicineType("Drops", Image.asset("assets/images/drops.png"), false),
+    MedicineType("Syrup", Image.asset("assets/images/syrup.png"), false),
     MedicineType("Syringe", Image.asset("assets/images/syringe.png"), false),
   ];
 

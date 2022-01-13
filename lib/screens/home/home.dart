@@ -1,15 +1,17 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:animated_widgets/animated_widgets.dart';
+import 'dart:io';
+import 'package:lottie/lottie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:pill_reminder/screens/add_new_medicine/add_new_medicine.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../notifications/notifications.dart';
 import '../../database/repository.dart';
 import '../../models/pill.dart';
 import '../../screens/home/medicines_list.dart';
 import '../../screens/home/calendar.dart';
 import '../../models/calendar_day_model.dart';
+import 'package:pill_reminder/screens/profile/profile.dart';
+import 'package:pill_reminder/screens/calendar/calendarex.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -17,6 +19,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  File _image;
+  String _imagepath;
+  String username;
   //-------------------| Flutter notifications |-------------------
   final Notifications _notifications = Notifications();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -41,6 +46,8 @@ class _HomeState extends State<Home> {
     super.initState();
     initNotifies();
     setData();
+    LoadImage();
+    LoadUserData();
     _daysList = _days.getCurrentDays();
   }
 
@@ -62,8 +69,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final double deviceHeight =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
-
+    final double deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       extendBody: true,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -72,7 +80,7 @@ class _HomeState extends State<Home> {
               .then((_) => setData());
         },
         tooltip: "Add Medicines",
-        child: Icon(Icons.ac_unit_outlined),
+        child: Icon(Icons.add_circle_sharp),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -88,17 +96,17 @@ class _HomeState extends State<Home> {
                 IconButton(
                   padding: EdgeInsets.all(2.0),
                   onPressed: () {
-                    print("calneder");
+                    // print("calneder");
                     // (Navigator.of(context).pushNamed('calendar'));
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (c, a1, a2) => AddNewMedicine(),
+                        pageBuilder: (c, a1, a2) => CalendarEx(),
                         // transitionDuration: Duration(milliseconds: 350),
                         transitionsBuilder:
                             (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(0.0, 1.0);
-                          const end = Offset.zero;
+                          const begin = Offset(-1.0, 0.0);
+                          const end = Offset(0.0, 0.0);
                           final tween = Tween(begin: begin, end: end);
                           final offsetAnimation = animation.drive(tween);
                           return SlideTransition(
@@ -118,15 +126,15 @@ class _HomeState extends State<Home> {
                 IconButton(
                   padding: EdgeInsets.all(2.0),
                   onPressed: () {
-                    print("person");
+                    // print("person");
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (c, a1, a2) => AddNewMedicine(),
+                        pageBuilder: (c, a1, a2) => Profile(),
                         // transitionDuration: Duration(milliseconds: 350),
                         transitionsBuilder:
                             (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(0.0, 1.0);
+                          const begin = Offset(1.0, 0.0);
                           const end = Offset.zero;
                           final tween = Tween(begin: begin, end: end);
                           final offsetAnimation = animation.drive(tween);
@@ -160,25 +168,75 @@ class _HomeState extends State<Home> {
                     alignment: Alignment.topCenter,
                     height: deviceHeight * 0.1,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Journal",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1
-                              .copyWith(color: Colors.black),
-                        ),
-                        ShakeAnimatedWidget(
-                          enabled: true,
-                          duration: Duration(milliseconds: 2000),
-                          curve: Curves.linear,
-                          shakeAngle: Rotation.deg(z: 30),
-                          child: Icon(
-                            Icons.notifications_none,
-                            size: 42.0,
+                        Container(
+                          height: deviceHeight * 0.1,
+                          width: deviceWidth * 0.5,
+                          child: Stack(
+                            children: [
+                              Text(
+                                "Hi,",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                left: 1,
+                                child: Text(
+                                  username != null ? username : 'Mehul',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline4
+                                      .copyWith(color: Colors.black),
+                                ),
+                              ),
+                            ],
                           ),
-                        )
+                        ),
+                        Spacer(),
+                        SizedBox(
+                            height: deviceHeight * 0.07,
+                            child: VerticalDivider(
+                              color: Colors.blue,
+                              thickness: 2,
+                            )),
+                        Text("Today"),
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (c, a1, a2) => Profile(),
+                                transitionDuration: Duration(milliseconds: 350),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  const begin = Offset(1.0, 0.0);
+                                  const end = Offset.zero;
+                                  final tween = Tween(begin: begin, end: end);
+                                  final offsetAnimation =
+                                      animation.drive(tween);
+                                  return SlideTransition(
+                                    position: offsetAnimation,
+                                    child: child,
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: _imagepath != null
+                              ? CircleAvatar(
+                                  backgroundImage: FileImage(File(_imagepath)),
+                                  radius: 20.0,
+                                )
+                              : CircleAvatar(
+                                  radius: 20.0,
+                                  backgroundImage: _image != null
+                                      ? AssetImage(
+                                          'assets/onboard/emp_profile.png')
+                                      : null),
+                        ),
                       ],
                     ),
                   ),
@@ -186,23 +244,25 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: deviceHeight * 0.01,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Calendar(chooseDay, _daysList),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 5.0),
+                //   child: Calendar(chooseDay, _daysList),
+                // ),
                 SizedBox(height: deviceHeight * 0.03),
                 dailyPills.isEmpty
                     ? SizedBox(
-                        width: double.infinity,
-                        height: 100,
-                        child: WavyAnimatedTextKit(
-                          textStyle: TextStyle(
-                              fontSize: 32.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                          text: ["Loading..."],
-                          isRepeatingAnimation: true,
-                          speed: Duration(milliseconds: 150),
+                        // width: deviceWidth,
+                        height: 400,
+                        child: OverflowBox(
+                          maxHeight: 700,
+                          maxWidth: 600,
+                          child: Lottie.asset(
+                            'assets/lottieanim/nodata_anim.json',
+                            repeat: true,
+                            reverse: true,
+                            alignment: Alignment.center,
+                            // width: 50.0,
+                          ),
                         ),
                       )
                     : MedicinesList(
@@ -238,5 +298,17 @@ class _HomeState extends State<Home> {
   }
 
   //===============================================================================
+  void LoadImage() async {
+    SharedPreferences saveImage = await SharedPreferences.getInstance();
+    setState(() {
+      _imagepath = saveImage.getString("imagepath");
+    });
+  }
 
+  void LoadUserData() async {
+    SharedPreferences saveName = await SharedPreferences.getInstance();
+    setState(() {
+      username = saveName.getString("username");
+    });
+  }
 }
