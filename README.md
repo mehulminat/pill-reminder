@@ -1,16 +1,21 @@
-# pill_reminder
+# Description
 
-A new Flutter project.
+Flutter/Dart Project with SQFLITE . The main motto of app was to help people / enduser take their medicine on time.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Onboarding Section
 
-A few resources to get you started if this is your first Flutter project:
+| Onboarding - 1 | Onboarding - 2 | Onboarding - 3 | Add Info |
+|:----------:|:-----:|:-----:|:--------:|
+| <img src="https://github.com/mehulminat/pill-reminder/blob/master/pill_outputimg/on1.jpg" alt="Nutrition Edit" width="200" height="400" /> | <img src="https://github.com/mehulminat/pill-reminder/blob/master/pill_outputimg/on2.jpg" alt="Payment" width="200" height="400" /> | <img src="https://github.com/mehulminat/pill-reminder/blob/master/pill_outputimg/on3.jpg" alt="Payment" width="200" height="400" /> | <img src="https://github.com/mehulminat/pill-reminder/blob/master/pill_outputimg/info.jpg" alt="Payment" width="200" height="400" /> 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Main Screens
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| Home | Add Med | Calendar | Profile | Notification Screen |
+|:----:|:--------:|:-------:|:-------:|:-------------------:|
+| <img src="https://github.com/mehulminat/pill-reminder/blob/master/pill_outputimg/Home.jpg" alt="Home" width="200" height="400" /> | <img src="https://github.com/mehulminat/pill-reminder/blob/master/pill_outputimg/Add.jpg" alt="Main" width="200" height="400" /> | <img src="https://github.com/mehulminat/pill-reminder/blob/master/pill_outputimg/cal.jpg" alt="Sample Chat" width="200" height="400" /> | <img src="https://github.com/mehulminat/pill-reminder/blob/master/pill_outputimg/pro.jpg" alt="Edit User" width="200" height="400" /> | <img src="https://github.com/mehulminat/pill-reminder/blob/master/pill_outputimg/noti.jpg" alt="Edit User" width="200" height="400" /> |
+
+## Video
+
+
+https://user-images.githubusercontent.com/72225679/158456909-699ecac9-f818-40f9-bcf5-3e0946401164.mp4
